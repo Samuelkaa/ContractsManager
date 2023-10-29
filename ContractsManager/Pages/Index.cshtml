@@ -1,0 +1,76 @@
+﻿@page "/Contracts/Index"
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script type="text/javascript">
+	loadData();
+
+	function loadData() {
+		$.ajax({
+			url: '/api/Contracts/GetContracts',
+			type: "GET",
+			dataType: "json",
+			success: function (data, status) {
+				$(".table").append(drawTable(data));
+			}
+		});
+	}
+
+	function drawRow(rowData) {
+		var row = $("<tr>");
+
+		row.append($("<td>" + rowData.id + "</td>"));
+		row.append($("<td>" + rowData.code + "</td>"));
+		row.append($("<td>" + rowData.name + "</td>"));
+		row.append($("<td>" + rowData.customer + "</td>"));
+		row.append($("<td>" + rowData.stages.map((stage) => " " + stage.stageName) + "</td>"));
+
+		row.append($("</tr>"));
+
+		return row;
+	}
+
+	function drawTable(data) {
+		var rows = [];
+
+		for (var i = 0; i < data.length; i++) {
+			rows.push(drawRow(data[i]));
+		}
+
+		$(".table").append(rows);
+	}
+</script>
+
+<div class="text-center">
+    <main>
+		<div class="container" style="height:1300px;">
+			<div>
+				<div>
+					<table class="table">
+						<tr>
+							<th scope="col">Идентификатор</th>
+							<th scope="col">Шифр</th>
+							<th scope="col">Название</th>
+							<th scope="col">Наименование</th>
+							<th scope="col">Стадии</th>
+						</tr>
+					</table>
+				</div>
+			</div>
+		</div>
+		@Html.ActionLink(
+		"Get Contracts",
+		"GetContracts",
+		"GetContracts"
+		)
+		@Html.ActionLink(
+		"Get Contract Stages (ID = 1)",
+		"GetContractStages",
+		"GetContractStages",
+		new { contractID = 1 }
+		)
+	</main>
+</div>

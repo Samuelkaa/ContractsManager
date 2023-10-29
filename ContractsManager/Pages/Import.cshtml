@@ -1,0 +1,12 @@
+﻿@page "/Contracts/Import"
+@model ImportModel
+@{
+    ViewData["Title"] = "Import File";
+}
+<h1>Import File</h1>
+
+@using (Html.BeginForm("Import", "UploadFile", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="file" />
+    <input type="submit" value="OK" />
+}

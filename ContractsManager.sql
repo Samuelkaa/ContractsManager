@@ -1,0 +1,16 @@
+CREATE TABLE contracts (
+"Id" BIGSERIAL NOT NULL PRIMARY KEY,
+"Code" VARCHAR(128) NOT NULL,
+"Name" VARCHAR(128) NOT NULL,
+"Customer" VARCHAR(128) NOT NULL
+);
+
+CREATE TABLE contractstages (
+"Id" BIGSERIAL NOT NULL PRIMARY KEY,
+"ContractId" BIGINT NOT NULL,
+"StageName" VARCHAR(128) NOT NULL,
+"StartDate" DATE,
+"EndDate" DATE
+);
+
+ALTER TABLE contractstages ADD CONSTRAINT FK_stagecontract_to_ContractID FOREIGN KEY ("ContractId") REFERENCES contracts("Id") ON DELETE CASCADE;
